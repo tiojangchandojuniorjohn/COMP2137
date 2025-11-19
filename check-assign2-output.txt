@@ -1,0 +1,273 @@
+---Host/Student info----
+
+Running on Thu Nov 13 12:08:06 AM EST 2025
+Run by tiojangchandojuniorjohn - () on host
+ Static hostname: student-VMware-Virtual-Platform
+      Machine ID: 1c787ae0cf224004a19cada615ea3460
+Operating System: Ubuntu 24.04.3 LTS
+a98742121b14ebe6350c4bf8245d0062  ./check-assign2-script.sh - a98742121b14ebe6350c4bf8245d0062  -
+------------------------
+
+---Start of Assignment2.sh Check------
+Retrieved makecontainers.sh script
+---Running makecontainers.sh----------
+Retrieving script library file
+This script performs many tasks. Please be patient
+To see more about what it is doing as it does it, use the --verbose option
+You may ignore any messages about Open vSwitch or dpkg-preconfigure being unable to re-open stdin
+DO NOT use control-Z when this script is running.
+Network lan deleted
+Network mgmt deleted
+Network lan created
+Network mgmt created
+Launching openwrt
+Retrieving image: Unpack: 100% (1.07GB/s)                                          Launching server1
+Retrieving image: Unpack: 100% (2.16GB/s)                                          Retrieving image: Unpack: 100% (2.16GB/s)                                          inactive
+Pushing /home/tiojangchandojuniorjohn/.ssh/id_ed25519.pub to /home/remoteadmin/.ssh/id_ed25519.pub: 100% (347.72MB/s)                                                                                                                      Waiting for server1 restart
+# Host server1-mgmt found: line 1
+# Host server1-mgmt found: line 2
+# Host server1-mgmt found: line 3
+/home/tiojangchandojuniorjohn/.ssh/known_hosts updated.
+Original contents retained as /home/tiojangchandojuniorjohn/.ssh/known_hosts.old
+---Retrieving assignment2.sh script---
+Retrieved assignment2 script
+Copied assignment2.sh script to server1
+---assignment2.sh run----
+=== Starting Assignment 2 Configuration Script ===
+
+=== Configuring Network Interface ===
+Found interface: eth0 for 192.168.16 network
+Set permissions to 600 for /etc/netplan/01-netcfg.yaml
+Netplan configuration applied successfully
+
+=== Configuring /etc/hosts ===
+Backed up /etc/hosts to /etc/hosts.bak
+Updated /etc/hosts with 192.168.16.21 server1
+-------------------------
+
+--network--------
+/etc/hosts
+-----------------------
+127.0.0.1	localhost
+::1		localhost ip6-localhost ip6-loopback
+ff02::1		ip6-allnodes
+ff02::2		ip6-allrouters
+
+
+192.168.16.2 openwrt
+172.16.1.2 openwrt-mgmt
+
+192.168.16.21 server1
+-------------
+/etc/netplan/01-netcfg.yaml
+-----------------------
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - 192.168.16.21/24
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.16.2
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+-------------
+/etc/netplan/10-lxc.yaml
+-----------------------
+network:
+    version: 2
+    ethernets:
+        eth0:
+            addresses: [192.168.16.241/24]
+            routes:
+              - to: default
+                via: 192.168.16.2
+            nameservers:
+                addresses: [192.168.16.2]
+                search: [home.arpa, localdomain]
+        eth1:
+            addresses: [172.16.1.241/24]
+-------------
+---applying netplan---
+---ip a---------------
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+142: eth0@if143: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:e8:36:23 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.16.21/24 brd 192.168.16.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet 192.168.16.241/24 brd 192.168.16.255 scope global secondary eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fee8:3623/64 scope link 
+       valid_lft forever preferred_lft forever
+144: eth1@if145: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:3e:27:22 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.16.1.241/24 brd 172.16.1.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe3e:2722/64 scope link 
+       valid_lft forever preferred_lft forever
+--ip r----------------
+default via 192.168.16.2 dev eth0 proto static 
+172.16.1.0/24 dev eth1 proto kernel scope link src 172.16.1.241 
+192.168.16.0/24 dev eth0 proto kernel scope link src 192.168.16.21 
+----------------------
+
+---services status------
+------------------------
+
+---ufw show added-------
+---ufw show status------
+------------------------
+
+---getents--------------------
+sudo:x:27:ubuntu
+---user home dir contents-----
+  1968216      4 -rw-r--r--   1 ubuntu   ubuntu        807 Jan  6  2022 /home/ubuntu/.profile
+  1968215      4 -rw-r--r--   1 ubuntu   ubuntu       3771 Jan  6  2022 /home/ubuntu/.bashrc
+  1968214      4 -rw-r--r--   1 ubuntu   ubuntu        220 Jan  6  2022 /home/ubuntu/.bash_logout
+  1987371      4 -rw-r--r--   1 root     remoteadmin      807 Jan  6  2022 /home/remoteadmin/.profile
+  1987372      4 -rw-r--r--   1 root     remoteadmin     3771 Jan  6  2022 /home/remoteadmin/.bashrc
+  1987355      4 -rwxr-xr-x   1 root     remoteadmin     1928 Nov 13 05:10 /home/remoteadmin/assignment2.sh
+  1986034      4 -rw-r--r--   1 root     remoteadmin      137 Nov 13 05:10 /home/remoteadmin/.ssh/id_ed25519.pub
+  1987182      4 -rw-------   1 root     root             137 Nov 13 05:10 /home/remoteadmin/.ssh/authorized_keys
+  1987373      4 -rw-r--r--   1 root     remoteadmin      220 Jan  6  2022 /home/remoteadmin/.bash_logout
+  1987351      0 -rw-r--r--   1 root     root               0 Nov 13 05:10 /home/remoteadmin/.cache/motd.legal-displayed
+/home/remoteadmin/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH0TObGTlqCV24D38xouagBb/axnW41ihP3/YYyWhUa0 tiojangchandojuniorjohn@student-VMware-Virtual-Platform
+-------------
+------------------------------
+
+---assignment2.sh rerun--------------------------------------------------------------------
+=== Starting Assignment 2 Configuration Script ===
+
+=== Configuring Network Interface ===
+Found interface: eth0 for 192.168.16 network
+Backed up /etc/netplan/01-netcfg.yaml to /etc/netplan/01-netcfg.yaml.bak
+Set permissions to 600 for /etc/netplan/01-netcfg.yaml
+Netplan configuration applied successfully
+
+=== Configuring /etc/hosts ===
+Backed up /etc/hosts to /etc/hosts.bak
+/etc/hosts already contains correct server1 entry
+-------------------------------------------------------------------------------------------
+
+--network--------
+/etc/hosts
+-----------------------
+127.0.0.1	localhost
+::1		localhost ip6-localhost ip6-loopback
+ff02::1		ip6-allnodes
+ff02::2		ip6-allrouters
+
+
+192.168.16.2 openwrt
+172.16.1.2 openwrt-mgmt
+
+192.168.16.21 server1
+-------------
+/etc/netplan/01-netcfg.yaml
+-----------------------
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - 192.168.16.21/24
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.16.2
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+-------------
+/etc/netplan/01-netcfg.yaml.bak
+-----------------------
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - 192.168.16.21/24
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.16.2
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+-------------
+/etc/netplan/10-lxc.yaml
+-----------------------
+network:
+    version: 2
+    ethernets:
+        eth0:
+            addresses: [192.168.16.241/24]
+            routes:
+              - to: default
+                via: 192.168.16.2
+            nameservers:
+                addresses: [192.168.16.2]
+                search: [home.arpa, localdomain]
+        eth1:
+            addresses: [172.16.1.241/24]
+-------------
+---applying netplan---
+---ip a---------------
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+142: eth0@if143: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:e8:36:23 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.16.21/24 brd 192.168.16.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet 192.168.16.241/24 brd 192.168.16.255 scope global secondary eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fee8:3623/64 scope link 
+       valid_lft forever preferred_lft forever
+144: eth1@if145: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:3e:27:22 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.16.1.241/24 brd 172.16.1.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe3e:2722/64 scope link 
+       valid_lft forever preferred_lft forever
+--ip r----------------
+default via 192.168.16.2 dev eth0 proto static 
+172.16.1.0/24 dev eth1 proto kernel scope link src 172.16.1.241 
+192.168.16.0/24 dev eth0 proto kernel scope link src 192.168.16.21 
+----------------------
+
+---services status------
+------------------------
+
+---getents--------------------
+sudo:x:27:ubuntu
+---user home dir contents-----
+  1968216      4 -rw-r--r--   1 ubuntu   ubuntu        807 Jan  6  2022 /home/ubuntu/.profile
+  1968215      4 -rw-r--r--   1 ubuntu   ubuntu       3771 Jan  6  2022 /home/ubuntu/.bashrc
+  1968214      4 -rw-r--r--   1 ubuntu   ubuntu        220 Jan  6  2022 /home/ubuntu/.bash_logout
+  1987371      4 -rw-r--r--   1 root     remoteadmin      807 Jan  6  2022 /home/remoteadmin/.profile
+  1987372      4 -rw-r--r--   1 root     remoteadmin     3771 Jan  6  2022 /home/remoteadmin/.bashrc
+  1987355      4 -rwxr-xr-x   1 root     remoteadmin     1928 Nov 13 05:10 /home/remoteadmin/assignment2.sh
+  1986034      4 -rw-r--r--   1 root     remoteadmin      137 Nov 13 05:10 /home/remoteadmin/.ssh/id_ed25519.pub
+  1987182      4 -rw-------   1 root     root             137 Nov 13 05:10 /home/remoteadmin/.ssh/authorized_keys
+  1987373      4 -rw-r--r--   1 root     remoteadmin      220 Jan  6  2022 /home/remoteadmin/.bash_logout
+  1987351      0 -rw-r--r--   1 root     root               0 Nov 13 05:10 /home/remoteadmin/.cache/motd.legal-displayed
+/home/remoteadmin/.ssh/authorized_keys
+-----------------------
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH0TObGTlqCV24D38xouagBb/axnW41ihP3/YYyWhUa0 tiojangchandojuniorjohn@student-VMware-Virtual-Platform
+-------------
+------------------------------
+
